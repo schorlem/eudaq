@@ -85,14 +85,14 @@ namespace eudaq {
 			#if USE_LCIO && USE_EUTELESCOPE
 			streamlog_out(MESSAGE9) << "Requested SensorID " << desiredSensorIDoffset << " has been assigend." << std::endl;
 			#else
-			std::cout << << "Requested SensorID " << desiredSensorIDoffset << " is already taken. Will try  now to fulfill sensor offset requirement." << std::endl;
+			std::cout << "Requested SensorID " << desiredSensorIDoffset << " is already taken. Will try  now to fulfill sensor offset requirement." << std::endl;
 			#endif			
     			return desiredSensorID;
     		} else {
 			#if USE_LCIO && USE_EUTELESCOPE
 			streamlog_out(MESSAGE9) << "Requested SensorID " << desiredSensorIDoffset << " is already taken. Will try  now to fulfill sensor offset requirement." << std::endl;
 			#else
-			std::cout << << "Requested SensorID " << desiredSensorIDoffset << " is already taken. Will try  now to fulfill sensor offset requirement." << std::endl;
+			std::cout << "Requested SensorID " << desiredSensorIDoffset << " is already taken. Will try  now to fulfill sensor offset requirement." << std::endl;
 			#endif
 		}
 	} 

@@ -152,7 +152,7 @@ class USBPixI4ConverterBase : public ATLASFEI4Interpreter<dh_lv1id_msk, dh_bcid_
 			#if USE_LCIO && USE_EUTELESCOPE
 			streamlog_out(MESSAGE9) << "At least one already registered board ID was detected in BORE - assuming that this is a duplicated BORE it will be discarded. If this is not true something went wrong and you are loosing a producer." << std::endl;
 			#else
-			std::cout << "[ConverterPlugin:USBPixI4] At least one already registered board ID was detected in BORE - assuming that this is a duplicated BORE it will be discarded. If this is not true something went wrong and you are loosing a producer."
+			std::cout << "[ConverterPlugin:USBPixI4] At least one already registered board ID was detected in BORE - assuming that this is a duplicated BORE it will be discarded. If this is not true something went wrong and you are loosing a producer."  << std::endl;
 			#endif
 		} else {
 			#if USE_LCIO && USE_EUTELESCOPE
