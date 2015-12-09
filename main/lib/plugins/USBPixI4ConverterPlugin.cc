@@ -229,18 +229,18 @@ class USBPixI4ConverterBase : public ATLASFEI4Interpreter<dh_lv1id_msk, dh_bcid_
 				}
 			}
 			std::cout << "moduleConfig[" << count_producers << "]:" << std::endl;
-			for(auto i = moduleConfig[count_producers].begin(); i!=moduleConfig[count_producers].end();++i){
-				std::cout << *i << ",";
+			for(auto& i : moduleConfig[count_producers]){
+				std::cout << i << ",";
 			};
 			std::cout << std::endl;
 			std::cout << "moduleIndex[" << count_producers << "]:" << std::endl;
-			for(auto i = moduleIndex[count_producers].begin(); i!=moduleIndex[count_producers].end();++i){
-				std::cout << *i << ",";
+			for(auto& i : moduleIndex[count_producers]){
+				std::cout << i << ",";
 			};
 			std::cout << std::endl;
 			std::cout << "moduleCount[" << count_producers << "]:" << std::endl;
-			for(auto i = moduleCount[count_producers].begin(); i!=moduleCount[count_producers].end();++i){
-				std::cout << *i << ",";
+			for(auto& i : moduleCount[count_producers]){
+				std::cout << i << ",";
 			};
 			std::cout << std::endl;
 		}
@@ -739,10 +739,7 @@ class USBPixI4ConverterPlugin : public DataConverterPlugin , public USBPixI4Conv
 		zsDataCollection->push_back( zsFrame.release() );
 
 		//clean up
-		for( auto it = tmphits.begin(); it != tmphits.end(); it++ )
-		{
-			delete (*it);
-		}
+		for( auto &it : tmphits) delete it; tmphits.clear();
 
 		//add this collection to lcio event
 		if( ( !zsDataCollectionExists )  && ( zsDataCollection->size() != 0 ) ) 
