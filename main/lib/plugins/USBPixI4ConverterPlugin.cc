@@ -664,24 +664,24 @@ class USBPixI4ConverterPlugin : public DataConverterPlugin , public USBPixI4Conv
 			{
 				if(internalIDtoSensorID.count(currently_handled_producer*100+this->moduleConfig.at(currently_handled_producer).at(0)+chip_id_offset-1)>0){
 					sensorID = internalIDtoSensorID[currently_handled_producer*100+this->moduleConfig.at(currently_handled_producer).at(0)+chip_id_offset-1];
-					std::cout << "key: " << currently_handled_producer*100+this->moduleConfig.at(currently_handled_producer).at(0)+chip_id_offset-1 << std::endl;
-					std::cout << "value: " << internalIDtoSensorID[currently_handled_producer*100+this->moduleConfig.at(currently_handled_producer).at(0)+chip_id_offset-1] << std::endl;
-					std::cout << "sensorID " << sensorID << std::cout;
+					//std::cout << "key: " << currently_handled_producer*100+this->moduleConfig.at(currently_handled_producer).at(0)+chip_id_offset-1 << std::endl;
+					//std::cout << "value: " << internalIDtoSensorID[currently_handled_producer*100+this->moduleConfig.at(currently_handled_producer).at(0)+chip_id_offset-1] << std::endl;
+					//std::cout << "sensorID " << sensorID << std::cout;
 				} else {
 					internalIDtoSensorID[currently_handled_producer*100+this->moduleConfig.at(currently_handled_producer).at(0)+chip_id_offset-1] = getNewlyAssignedSensorID(-1,20,"USBPIXI4",currently_handled_producer);
 					sensorID = internalIDtoSensorID[currently_handled_producer*100+this->moduleConfig.at(currently_handled_producer).at(0)+chip_id_offset-1];
-					std::cout << "sensorID " << sensorID << std::cout;
+					//std::cout << "sensorID " << sensorID << std::cout;
 				}
 			}
 			else
 			{
 				if(internalIDtoSensorID.count(currently_handled_producer*100+ev_raw.GetID(0) + chip_id_offset + this->first_sensor_id)>0){
 					sensorID = internalIDtoSensorID[currently_handled_producer*100+ev_raw.GetID(0) + chip_id_offset + this->first_sensor_id];
-					std::cout << "sensorID " << sensorID << std::cout;
+					//std::cout << "sensorID " << sensorID << std::cout;
 				} else {
 					internalIDtoSensorID[currently_handled_producer*100+ev_raw.GetID(0) + chip_id_offset + this->first_sensor_id] = getNewlyAssignedSensorID(-1,20,"USBPIXI4",currently_handled_producer);
 					sensorID = internalIDtoSensorID[currently_handled_producer*100+ev_raw.GetID(0) + chip_id_offset + this->first_sensor_id];
-					std::cout << "sensorID " << sensorID << std::cout;
+					//std::cout << "sensorID " << sensorID << std::cout;
 				}
 			}
 
