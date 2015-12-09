@@ -662,20 +662,26 @@ class USBPixI4ConverterPlugin : public DataConverterPlugin , public USBPixI4Conv
 			
 			if(this->advancedConfig.at(currently_handled_producer))
 			{
-				if(internalIDtoSensorID.count(this->moduleConfig.at(currently_handled_producer).at(chip)+chip_id_offset-1)>0){
-					sensorID = internalIDtoSensorID[this->moduleConfig.at(currently_handled_producer).at(chip)+chip_id_offset-1];
+				if(internalIDtoSensorID.count(currently_handled_producer*100+this->moduleConfig.at(currently_handled_producer).at(0)+chip_id_offset-1)>0){
+					sensorID = internalIDtoSensorID[currently_handled_producer*100+this->moduleConfig.at(currently_handled_producer).at(0)+chip_id_offset-1];
+					std::cout << "key: " << currently_handled_producer*100+this->moduleConfig.at(currently_handled_producer).at(0)+chip_id_offset-1 << std::endl;
+					std::cout << "value: " << internalIDtoSensorID[currently_handled_producer*100+this->moduleConfig.at(currently_handled_producer).at(0)+chip_id_offset-1] << std::endl;
+					std::cout << "sensorID " << sensorID << std::cout;
 				} else {
-					internalIDtoSensorID[this->moduleConfig.at(currently_handled_producer).at(chip)+chip_id_offset-1] = getNewlyAssignedSensorID(-1,20,"USBPIXI4",currently_handled_producer);
-					sensorID = internalIDtoSensorID[this->moduleConfig.at(currently_handled_producer).at(chip)+chip_id_offset-1];
+					internalIDtoSensorID[currently_handled_producer*100+this->moduleConfig.at(currently_handled_producer).at(0)+chip_id_offset-1] = getNewlyAssignedSensorID(-1,20,"USBPIXI4",currently_handled_producer);
+					sensorID = internalIDtoSensorID[currently_handled_producer*100+this->moduleConfig.at(currently_handled_producer).at(0)+chip_id_offset-1];
+					std::cout << "sensorID " << sensorID << std::cout;
 				}
 			}
 			else
 			{
-				if(internalIDtoSensorID.count(ev_raw.GetID(chip) + chip_id_offset + this->first_sensor_id)>0){
-					sensorID = internalIDtoSensorID[ev_raw.GetID(chip) + chip_id_offset + this->first_sensor_id];
+				if(internalIDtoSensorID.count(currently_handled_producer*100+ev_raw.GetID(0) + chip_id_offset + this->first_sensor_id)>0){
+					sensorID = internalIDtoSensorID[currently_handled_producer*100+ev_raw.GetID(0) + chip_id_offset + this->first_sensor_id];
+					std::cout << "sensorID " << sensorID << std::cout;
 				} else {
-					internalIDtoSensorID[ev_raw.GetID(chip) + chip_id_offset + this->first_sensor_id] = getNewlyAssignedSensorID(-1,20,"USBPIXI4",currently_handled_producer);
-					sensorID = internalIDtoSensorID[ev_raw.GetID(chip) + chip_id_offset + this->first_sensor_id];
+					internalIDtoSensorID[currently_handled_producer*100+ev_raw.GetID(0) + chip_id_offset + this->first_sensor_id] = getNewlyAssignedSensorID(-1,20,"USBPIXI4",currently_handled_producer);
+					sensorID = internalIDtoSensorID[currently_handled_producer*100+ev_raw.GetID(0) + chip_id_offset + this->first_sensor_id];
+					std::cout << "sensorID " << sensorID << std::cout;
 				}
 			}
 
@@ -719,6 +725,7 @@ class USBPixI4ConverterPlugin : public DataConverterPlugin , public USBPixI4Conv
 					if(this->getHitData(currently_handled_producer,Word, false, Col, Row, ToT))
 					{
 						if(this->advancedConfig.at(currently_handled_producer)) this->transformChipsToModule(Col, Row, this->moduleIndex.at(currently_handled_producer).at(chip));
+						std::cout << "hit: " << Col << " " << Row << " written in Sensor " << sensorID << std::endl;
 						eutelescope::EUTelGenericSparsePixel* thisHit = new eutelescope::EUTelGenericSparsePixel( Col, Row, ToT, lvl1-1);
 						sparseFrame->addSparsePixel( thisHit );
 						tmphits.push_back( thisHit );
