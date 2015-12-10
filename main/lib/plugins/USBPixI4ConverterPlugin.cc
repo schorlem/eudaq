@@ -450,6 +450,22 @@ class USBPixI4ConverterBase : public ATLASFEI4Interpreter<dh_lv1id_msk, dh_bcid_
 		}
 	}
 
+	void transformChipsToModuleWrong(unsigned int& col, unsigned int& row, int chip) const
+	{
+		switch(chip)
+		{
+			default:
+				break;
+			case 2:
+				row = 335-row;
+				break;
+			case 1:
+				row = 335-row;
+				col += 80;
+				break;
+		}
+	}
+
 	inline unsigned int getWord(const std::vector<unsigned char>& data, size_t index) const
 	{
 		return (((unsigned int)data[index + 3]) << 24) | (((unsigned int)data[index + 2]) << 16) | (((unsigned int)data[index + 1]) << 8) | (unsigned int)data[index];
@@ -724,7 +740,11 @@ class USBPixI4ConverterPlugin : public DataConverterPlugin , public USBPixI4Conv
 					//First Hit
 					if(this->getHitData(currently_handled_producer,Word, false, Col, Row, ToT))
 					{
-						if(this->advancedConfig.at(currently_handled_producer)) this->transformChipsToModule(Col, Row, this->moduleIndex.at(currently_handled_producer).at(chip));
+						if(this->advancedConfig.at(currently_handled_producer)) {
+						
+							if(sensorID == 21) this->transformChipsToModuleWrong(Col, Row, this->moduleIndex.at(currently_handled_producer).at(chip));
+							else this->transformChipsToModule(Col, Row, this->moduleIndex.at(currently_handled_producer).at(chip));
+						}
 						std::cout << "hit: " << Col << " " << Row << " written in Sensor " << sensorID << std::endl;
 						eutelescope::EUTelGenericSparsePixel* thisHit = new eutelescope::EUTelGenericSparsePixel( Col, Row, ToT, lvl1-1);
 						sparseFrame->addSparsePixel( thisHit );
@@ -733,7 +753,10 @@ class USBPixI4ConverterPlugin : public DataConverterPlugin , public USBPixI4Conv
 					//Second Hit
 					if(this->getHitData(currently_handled_producer, Word, true, Col, Row, ToT)) 
 					{
-						if(this->advancedConfig.at(currently_handled_producer)) this->transformChipsToModule(Col, Row, this->moduleIndex.at(currently_handled_producer).at(chip));
+						if(this->advancedConfig.at(currently_handled_producer)) {
+							if(sensorID == 21) this->transformChipsToModuleWrong(Col, Row, this->moduleIndex.at(currently_handled_producer).at(chip));
+							else this->transformChipsToModule(Col, Row, this->moduleIndex.at(currently_handled_producer).at(chip));
+						}
 						eutelescope::EUTelGenericSparsePixel* thisHit = new eutelescope::EUTelGenericSparsePixel( Col, Row, ToT, lvl1-1);
 						sparseFrame->addSparsePixel( thisHit );
 						tmphits.push_back( thisHit );
